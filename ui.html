@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .input-group { margin-bottom: 15px; }
+    input, textarea, button { width: 100%; padding: 10px; margin-top: 5px; }
+    button { background: #1a73e8; color: white; border: none; cursor: pointer; }
+    button:hover { background: #1557b0; }
+  </style>
+</head>
+<body>
+  <h1>Agendador de Tarefas e Reuniões</h1>
+  
+  <div class="input-group">
+    <label for="titulo">Título:</label>
+    <input type="text" id="titulo" placeholder="Título da tarefa/reunião">
+  </div>
+
+  <div class="input-group">
+    <label for="descricao">Descrição:</label>
+    <textarea id="descricao" placeholder="Descrição"></textarea>
+  </div>
+
+  <div class="input-group">
+    <label for="data">Data e Hora:</label>
+    <input type="datetime-local" id="data">
+  </div>
+
+  <div class="input-group">
+    <label for="participantes">Participantes (e-mails):</label>
+    <input type="text" id="participantes" placeholder="email1@exemplo.com, email2@exemplo.com">
+  </div>
+
+  <button onclick="agendarEvento()">Agendar</button>
+
+  <script>
+    function agendarEvento() {
+      const titulo = document.getElementById('titulo').value;
+      const descricao = document.getElementById('descricao').value;
+      const data = document.getElementById('data').value;
+      const participantes = document.getElementById('participantes').value.split(',');
+
+      google.script.run
+        .withSuccessHandler(() => alert("Evento agendado com sucesso!"))
+        .withFailureHandler((err) => alert("Erro: " + err.message))
+        .criarEvento(titulo, descricao, data, participantes);
+    }
+  </script>
+</body>
+</html>
